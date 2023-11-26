@@ -33,11 +33,7 @@ def sort_csv_file(file_path):
 
 
 def main():
-    # Use double backslashes or raw string to handle the backslashes in the file path
-    file_path = "C:\\Users\\dorcohe1\\OneDrive - Intel Corporation\\Desktop\\Final_proj\\Logs\\LNL-M_WarmReset_log.csv"
-    
-    # Alternatively, you can use a raw string:
-    # file_path = r"C:\Users\dorcohe1\OneDrive - Intel Corporation\Desktop\Final_proj\Logs\LNL-M_WarmReset_log.csv"
+    file_path = "Logs\\LNL-M_WarmReset_log.csv"
     
     sort_csv_file(file_path)
 
