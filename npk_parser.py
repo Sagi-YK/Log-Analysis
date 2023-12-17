@@ -67,14 +67,15 @@ def extract_process_names_from_log(csv_file_path):
 #         output_file.close()
 
 def create_sequence_diagram():
+    sequence_diagram_file = 'sequence_diagram.png'
     plantuml = PlantUML(url='http://www.plantuml.com/plantuml/img/')
-    plantuml.processes_file(filename='sample.txt', outfile='sequence_diagram.png')
+    plantuml.processes_file(filename='sample.txt', outfile=sequence_diagram_file)
+    return sequence_diagram_file
 
 
-def main():
-    csv_file_path = "Logs\\LNL-M_WarmReset_log.csv"
+def load_csv(file_path):
 
-    process_names = extract_process_names_from_log(csv_file_path)
+    process_names = extract_process_names_from_log(file_path)
     # print(process_names)
 
     example = 'Python->CSME: Start\n'
@@ -100,8 +101,6 @@ def main():
     except FileNotFoundError:
         print("The 'docs' directory does not exist")
 
-    create_sequence_diagram()
+    sequence_diagram_file = create_sequence_diagram()
 
-
-if __name__ == "__main__":
-    main()  
+    return sequence_diagram_file

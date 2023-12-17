@@ -28,6 +28,7 @@
 *.csv
 *.txt
 *.png
+*.pyc
 
 # OS generated files #
 ######################
