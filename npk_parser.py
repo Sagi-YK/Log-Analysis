@@ -73,7 +73,7 @@ def create_sequence_diagram():
     return sequence_diagram_file
 
 
-def load_csv(file_path):
+def generate_sequence_diagram(file_path):
 
     process_names = extract_process_names_from_log(file_path)
     # print(process_names)

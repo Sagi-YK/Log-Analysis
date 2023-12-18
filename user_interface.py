@@ -25,14 +25,20 @@ class MainWindow(QWidget):
         if not file_path:
             print(f"Unable to open selected file.")
             return
+        
+        # Clear the displayed image
+        self.clear_image()
 
-        image_path = npk_parser.load_csv(file_path)
+        image_path = npk_parser.generate_sequence_diagram(file_path)
         if image_path:
             self.show_image(image_path)
 
     def show_image(self, image_path):
         pixmap = QPixmap(image_path)
         self.image_label.setPixmap(pixmap)
+
+    def clear_image(self):
+        self.image_label.clear()
 
 if __name__ == '__main__':
     app = QApplication([])
