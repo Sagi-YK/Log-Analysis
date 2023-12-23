@@ -3,8 +3,10 @@ from tkinter import filedialog
 import pandas as pd
 import os
 
-# Declare search_entry as a global variable
+# Declare search_entry, message_var, and listbox as global variables
 search_entry = None
+message_var = None
+listbox = None
 
 def open_csv():
     filepath = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
@@ -23,11 +25,17 @@ def open_csv():
             row_str = '   '.join(map(lambda x: f"{x:<15}", row))
             listbox.insert(tk.END, row_str)
 
+        # Reset the message
+        message_var.set("")
+
     except Exception as e:
-        print(f"Error reading CSV file: {e}")
+        # Set an error message
+        message_var.set(f"Error reading CSV file: {e}")
 
 def find_text():
-    global search_entry  # Access the global search_entry variable
+    global search_entry, message_var, listbox
+    # Reset the message
+    message_var.set("")
     search_text = search_entry.get().lower()
     if search_text:
         listbox.selection_clear(0, tk.END)
@@ -38,10 +46,12 @@ def find_text():
                 listbox.see(i)
                 break
         else:
-            print(f"Text '{search_text}' not found.")
+            message_var.set(f"Text '{search_text}' not found.")
 
 def find_next():
-    global search_entry  # Access the global search_entry variable
+    global search_entry, message_var, listbox
+    # Reset the message
+    message_var.set("")
     search_text = search_entry.get().lower()
     if search_text:
         current_selection = listbox.curselection()
@@ -55,12 +65,14 @@ def find_next():
                     listbox.see(i)
                     break
             else:
-                print(f"No more occurrences of '{search_text}'.")
+                message_var.set(f"No more occurrences of '{search_text}'.")
         else:
-            print("No item selected in the listbox.")
+            message_var.set("No item selected in the listbox.")
 
 def find_previous():
-    global search_entry  # Access the global search_entry variable
+    global search_entry, message_var, listbox
+    # Reset the message
+    message_var.set("")
     search_text = search_entry.get().lower()
     if search_text:
         current_selection = listbox.curselection()
@@ -74,11 +86,13 @@ def find_previous():
                     listbox.see(items.index(i))
                     break
             else:
-                print(f"No previous occurrences of '{search_text}'.")
+                message_var.set(f"No previous occurrences of '{search_text}'.")
         else:
-            print("No item selected in the listbox.")
+            message_var.set("No item selected in the listbox.")
 
 def main():
+    global search_entry, message_var, listbox
+
     # Create the main window
     root = tk.Tk()
     root.title("CSV Viewer")
@@ -101,8 +115,12 @@ def main():
     file_menu.add_separator()
     file_menu.add_command(label="Exit", command=root.quit)
 
+    # Create a label for displaying messages
+    message_var = tk.StringVar()
+    message_label = tk.Label(frame, textvariable=message_var, fg="red")
+    message_label.grid(row=0, column=0, columnspan=2, pady=(10, 5), padx=10, sticky="w")
+
     # Create an entry for search string
-    global search_entry  # Make search_entry a global variable
     search_entry = tk.Entry(frame, width=30)  # Set a specific width
     search_entry.grid(row=0, column=2, padx=10, pady=(10, 5), sticky="w")  # Place it to the right of "Search:"
     search_entry_label = tk.Label(frame, text="Search:")
@@ -119,7 +137,6 @@ def main():
     find_previous_button.grid(row=0, column=5, padx=(5, 0), pady=5, sticky="ew")
 
     # Create a Listbox to display the CSV content
-    global listbox  # Make listbox a global variable so it can be accessed by open_csv()
     listbox = tk.Listbox(frame, justify='left', width=80)  # Adjust the width as needed
     listbox.grid(row=1, column=0, columnspan=6, sticky="nsew", padx=10, pady=10)  # Add padx and pady for left and top margin
 
