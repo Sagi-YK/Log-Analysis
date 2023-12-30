@@ -1,0 +1,22 @@
+{
+    "patterns": [
+        {
+            "name": "CSE_Reset",
+            "Start": "2023-01-01T08:00:00",
+            "End": "2023-01-01T17:00:00",
+            "Time": "9 hours"
+        },
+        {
+            "name": "Global_Reset",
+            "Start": "2023-02-15T10:30:00",
+            "End": "2023-02-15T18:45:00",
+            "Time": "8 hours 15 minutes"
+        },
+        {
+            "name": "Warm_reset",
+            "Start": "2023-03-10T14:00:00",
+            "End": "2023-03-10T20:30:00",
+            "Time": "6 hours 30 minutes"
+        }
+    ]
+}

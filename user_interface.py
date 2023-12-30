@@ -13,16 +13,17 @@ def open_csv():
     if not filepath:
         return
     try:
-        df = pd.read_csv(filepath, usecols=range(4))
+        df = pd.read_csv(filepath, dtype={'column_name': str})
         listbox.delete(0, tk.END)
 
         # Insert column headings with padding for alignment
-        headings = '   '.join([f"{col:<15}" for col in df.columns])
+        headings = '                   '.join([f"{col:<15}" for col in df.columns])
         listbox.insert(tk.END, headings)
 
-        # Insert data rows with increased spaces
+        # Insert data rows with increased spaces, skipping empty columns
         for _, row in df.iterrows():
-            row_str = '   '.join(map(lambda x: f"{x:<15}", row))
+            non_empty_values = [f"{x:<15}" for x in row if pd.notna(x)]
+            row_str = '         '.join(non_empty_values)
             listbox.insert(tk.END, row_str)
 
         # Reset the message
@@ -111,7 +112,7 @@ def main():
     # Add items to the menu
     file_menu = tk.Menu(menu, tearoff=0)
     menu.add_cascade(label="File", menu=file_menu)
-    file_menu.add_command(label="Open", command=open_csv)
+    file_menu.add_command(label="Open File...", command=open_csv)
     file_menu.add_separator()
     file_menu.add_command(label="Exit", command=root.quit)
 
